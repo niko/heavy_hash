@@ -1,14 +1,14 @@
 # encoding: utf-8
 
 $:.unshift File.expand_path('../lib', __FILE__)
-require 'tree/version'
+require 'heavy_hash/version'
 
 Gem::Specification.new do |s|
-  s.name         = "tree"
-  s.version      = Tree::VERSION
+  s.name         = "heavy_hash"
+  s.version      = HeavyHash::VERSION
   s.authors      = ["Niko Dittmann"]
   s.email        = "mail+git@niko-dittmann.com"
-  s.homepage     = "http://github.com/niko/tree"
+  s.homepage     = "http://github.com/niko/heavy_hash"
   s.summary      = "[summary]"
   s.description  = "[description]"
 
