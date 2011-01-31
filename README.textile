@@ -1,6 +1,6 @@
 h1. HeavyHash
 
-HeavyHash is a nested Hash like object which provides a payload array per node. I used it to store a URLs and clients connected to each URL, including the sub-URLs:
+HeavyHash is a nested Hash like object which provides a payload array per node. I use it for Websockets, to remember connections to a client (each called a channel). The connections are opened on a URL by a client.
 
 <pre><code>@channels = HeavyHash.new
 @channels.path(@connection1.path) << @connection1
