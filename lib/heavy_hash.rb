@@ -1,6 +1,5 @@
 require 'forwardable'
 require 'set'
-require 'json'
 
 class HeavyHash
   attr_reader :content, :hash
