@@ -38,6 +38,14 @@ describe HeavyHash do
       @hh[:foo][:baz] << 3
       @hh[:foo].leaves.should == [1,2,3]
     end
+    describe "when false given as parameter" do
+      it "aggregates the playlod just the subnodes" do
+        @hh[:foo] << 1
+        @hh[:foo][:bar] << 2
+        @hh[:foo][:baz] << 3
+        @hh[:foo].leaves(false).should == [2,3]
+      end
+    end
   end
   describe "#path" do
     it "is a convience for deep retrieval" do
@@ -49,6 +57,11 @@ describe HeavyHash do
       @hh.path('/foo/bar/baz') << 1
       @hh.path('/foo/bar/baz') << 2
       @hh[:foo][:bar][:baz].content.should == [1,2]
+    end
+    it "works with just a slash" do
+      @hh << 1
+      @hh[:foo] << 2
+      @hh.path('/').content.should == [1]
     end
   end
   describe "#remove" do
