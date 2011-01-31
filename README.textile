@@ -1,0 +1,25 @@
+h1. HeavyHash
+
+HeavyHash is a nested Hash like object which provides a payload array per node. I used it to store a URLs and clients connected to each URL, including the sub-URLs:
+
+<pre><code>@channels = HeavyHash.new
+@channels.path(@connection1.path) << @connection1
+@channels.path(@connection2.path) << @connection2
+</code></pre>
+
+... and in a sinatra app:
+
+<pre><code>post '*' do
+  parsed_message = JSON.parse(params[:message])
+  message = parsed_message.to_json
+  @channels.path(*params[:splat]).leaves.each do |connection|
+    connection.send message
+  end
+end
+</code></pre>
+
+There are two methods to access a node: @[key1][key2]@ and @path('/key1/key2)@. The latter is just a convenience method for the first.
+
+Each node has two getters: @content@ and @leaves@. @content@ return a nodes payload (added by @<<@), @leaves@ returns the sum of a nodes and all its subnodes payload.
+
+There are two methods to change a HeavyHash tree: @<<@ and @remove()@. @<<@ adds a payload to a node and @remove@ (surprise) removes it again. When removing the last payload from a node the node itself gets deleted. Also all empty parent nodes are deleted.
