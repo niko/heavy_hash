@@ -10,12 +10,12 @@ HeavyHash is a nested Hash like object which provides a payload array per node. 
 ... and in a sinatra app:
 
 <pre><code>post '*' do
-  parsed_message = JSON.parse(params[:message])
-  message = parsed_message.to_json
-  @channels.path(*params[:splat]).leaves.each do |connection|
-    connection.send message
+  clients = CHANNELS.leaves - CHANNELS.path(params[:splat].first).leaves(false)
+  clients.each do |connection|
+    connection.send params[:message]
   end
 end
+
 </code></pre>
 
 There are two methods to access a node: @[key1][key2]@ and @path('/key1/key2)@. The latter is just a convenience method for the first.
