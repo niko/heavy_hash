@@ -22,9 +22,14 @@ class HeavyHash
     @parent.delete(@key) if empty?
   end
   
-  def leaves(include_current_node=true)
-    child_leaves = hash.values.map(&:leaves).flatten
-    include_current_node ? content+child_leaves : child_leaves
+  def childrens_content(include_current_node=false)
+    cc = hash.values.map{|c| c.childrens_content true}.flatten
+    include_current_node ? content+cc : cc
+  end
+  
+  def parents_content(include_current_node=false)
+    pc = root? ? [] : @parent.parents_content(true).flatten
+    include_current_node ? content+pc : pc
   end
   
   def empty?

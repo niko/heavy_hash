@@ -16,14 +16,6 @@ describe HeavyHash do
       @hh[:foo][:bar].content.should == [1,2]
     end
   end
-  describe "#leaves" do
-    it "adds the content of the sub leaves" do
-      @hh[:foo] << 1
-      @hh[:foo][:bar] << 2
-      @hh[:foo][:bar] << 3
-      @hh[:foo].leaves.should == [1,2,3]
-    end
-  end
   describe "#content" do
     it "returns the playload of a node" do
       @hh[:foo] << 1
@@ -31,19 +23,32 @@ describe HeavyHash do
       @hh[:foo].content.should == [1,2]
     end
   end
-  describe "#leaves" do
-    it "aggregates the playlod of the node and all subnodes" do
-      @hh[:foo] << 1
+  describe "#childrens_content" do
+    it "aggregates the payload of just the subnodes" do
       @hh[:foo][:bar] << 2
       @hh[:foo][:baz] << 3
-      @hh[:foo].leaves.should == [1,2,3]
+      @hh[:foo].childrens_content.should == [2,3]
     end
-    describe "when false given as parameter" do
-      it "aggregates the playlod just the subnodes" do
+    describe "when true given as parameter" do
+      it "aggregates the payload of the node and the subnodes" do
         @hh[:foo] << 1
         @hh[:foo][:bar] << 2
         @hh[:foo][:baz] << 3
-        @hh[:foo].leaves(false).should == [2,3]
+        @hh[:foo].childrens_content(true).should == [1,2,3]
+      end
+    end
+  end
+  describe "#parents_content" do
+    it "aggregates the payload of all parents" do
+      @hh[:foo] << 1
+      @hh[:foo][:bar] << 2
+      @hh[:foo][:bar][:baz].parents_content(true).sort.should == [1,2]
+    end
+    describe "when true given as parameter" do
+      it "aggregates the payload of all parents inlcuding the current node" do
+        @hh[:foo] << 1
+        @hh[:foo][:bar] << 2
+        @hh[:foo][:bar].parents_content(true).sort.should == [1,2]
       end
     end
   end
