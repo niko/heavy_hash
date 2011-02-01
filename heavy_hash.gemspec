@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors      = ["Niko Dittmann"]
   s.email        = "mail+git@niko-dittmann.com"
   s.homepage     = "http://github.com/niko/heavy_hash"
-  s.summary      = "[summary]"
-  s.description  = "[description]"
+  s.summary      = "A tree structure with payload and convienent access."
+  s.description  = s.summary
 
   s.files        = `git ls-files app lib`.split("\n")
   s.platform     = Gem::Platform::RUBY
